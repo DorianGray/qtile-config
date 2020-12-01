@@ -1,19 +1,14 @@
+from ...util import color
 import math
 import cairocffi
 
 from libqtile import bar
-# from libqtile.log_utils import logger
 from libqtile.widget import base
 
 
 __all__ = [
     'Power',
 ]
-
-
-def hex2rgb(s):
-    s = s.lstrip("#")
-    return tuple(float(int(s[i:i+2], 16)) for i in (0, 2, 4))
 
 
 class Power(base._Widget, base.MarginMixin):
@@ -42,9 +37,13 @@ class Power(base._Widget, base.MarginMixin):
         surface.clear(self.background or self.bar.background)
         ctx.save()
 
+        if self.rotate != 0.0:
+            ctx.translate(width/2, height/2)
+            ctx.rotate(self.rotate*math.pi/180)
+            ctx.translate(-width/2, -height/2)
         ctx.translate(self.margin_x, self.margin_y)
         ctx.set_fill_rule(cairocffi.FILL_RULE_EVEN_ODD)
-        ctx.set_source_rgb(*hex2rgb("#FFFFDD"))
+        ctx.set_source_rgb(*color.hex2rgb("#FFFFDD"))
         centerx, centery = width / 2, height / 2
         radius = (width / 2) * 0.6
         ctx.set_line_width(min(height, width) * 0.1)

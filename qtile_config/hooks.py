@@ -4,6 +4,9 @@ from libqtile import hook
 from .util.sync import await_sync
 
 
+__all__ = []
+
+
 DISPLAY = os.getenv('DISPLAY', None)
 HOME = os.getenv('HOME', None)
 
