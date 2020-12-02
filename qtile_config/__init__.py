@@ -62,7 +62,7 @@ screens = [
                 widget.Spacer(),
                 widget.Systray(),
                 widget.Clock(format='%H:%M'),
-                Power(),
+                Power(line_weight=0.1, rotate=0.0),
             ],
             64,
         ),
