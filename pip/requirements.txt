@@ -1,2 +1,4 @@
+gobject
+PyGObject
 -r ../../qtile/requirements.txt
 -e ../qtile

@@ -34,6 +34,7 @@ def lint(session):
 def qtile(session):
     setup(session)
     session.install('-r', 'pip/requirements.txt', '-e', '.')
+    session.run('pypy3', '-m', 'qtile_config')
 
 
 @nox.session()
