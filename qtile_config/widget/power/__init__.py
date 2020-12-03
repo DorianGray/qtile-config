@@ -14,15 +14,15 @@ __all__ = [
 class Power(base._Widget, base.MarginMixin):
     orientations = base.ORIENTATION_BOTH
     defaults = [
-        ("rotate", 135.0, "rotate the image in degrees counter-clockwise"),
-        ("weight", 0.125, "how thick the lines should be, by percentage"),
+        ('rotate', 135.0, 'rotate the image in degrees counter-clockwise'),
+        ('weight', 0.125, 'how thick the lines should be, by percentage'),
     ]
 
     def __init__(self, length=bar.CALCULATED, **config):
         base._Widget.__init__(self, length, **config)
         self.add_defaults(self.__class__.defaults)
         self.add_defaults(base.MarginMixin.defaults)
-        self._variable_defaults["margin"] = 0
+        self._variable_defaults['margin'] = 0
         self._pressed = False
 
     def _configure(self, qtile, pbar):
@@ -46,7 +46,7 @@ class Power(base._Widget, base.MarginMixin):
 
         ctx.translate(self.margin_x, self.margin_y)
         ctx.set_fill_rule(cairocffi.FILL_RULE_EVEN_ODD)
-        ctx.set_source_rgb(*color.hex2rgb("#FFFFDD"))
+        ctx.set_source_rgb(*color.hex2rgb('#FFFFDD'))
         centerx, centery = width / 2, height / 2
         radius = (width / 2) * 0.6
         ctx.set_line_width(min(height, width) * self.line_weight)

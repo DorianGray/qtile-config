@@ -15,19 +15,19 @@ HOME = os.getenv('HOME', None)
 @await_sync
 async def _autostart():
     await asyncio.create_subprocess_exec(
-        "compton",
-        "--config",
-        "{}/.config/compton/compton.conf".format(HOME),
-        "-dbus",
-        "-d",
+        'compton',
+        '--config',
+        f'{HOME}/.config/compton/compton.conf',
+        '-dbus',
+        '-d',
         DISPLAY,
     )
     await asyncio.create_subprocess_exec(
-        "xautolock",
-        "-time",
-        "10",
-        "-detectsleep",
-        "-locker",
-        "/usr/local/bin/xautolocker",
+        'xautolock',
+        '-time',
+        '10',
+        '-detectsleep',
+        '-locker',
+        '/usr/local/bin/xautolocker',
     )
-    await asyncio.create_subprocess_exec("unclutter", "-root")
+    await asyncio.create_subprocess_exec('unclutter', '-root')
