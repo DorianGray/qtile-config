@@ -1,4 +1,5 @@
 from ...util import color
+from ..mixin import KeyMixin
 import math
 import cairocffi
 
@@ -11,7 +12,7 @@ __all__ = [
 ]
 
 
-class Power(base._Widget, base.MarginMixin):
+class Power(base._Widget, base.MarginMixin, KeyMixin):
     orientations = base.ORIENTATION_BOTH
     defaults = [
         ('rotate', 135.0, 'rotate the image in degrees counter-clockwise'),
@@ -28,6 +29,11 @@ class Power(base._Widget, base.MarginMixin):
     def _configure(self, qtile, pbar):
         base._Widget._configure(self, qtile, pbar)
         self.length = self.calculate_length()
+
+    def keys(self):
+        return [
+
+        ]
 
     def draw(self):
         surface = self.drawer

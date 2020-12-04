@@ -1,21 +1,15 @@
 import os
 import asyncio
-from types import SimpleNamespace
-from .widget import (
-    Power,
-    Bar,
-)
+from itertools import chain
+from . import widgets
+from .widget.mixin import KeyMixin
 from .layout import (
     floating_layout,
     layouts,
 )
-from .keybindings import (
-    keys,
-    mouse,
-)
 from .util.sync import await_sync
+from .mouse import mouse
 from libqtile import (
-    widget,
     hook,
 )
 from libqtile.config import (
@@ -47,7 +41,6 @@ __all__ = [
 DISPLAY = os.getenv('DISPLAY', None)
 HOME = os.getenv('HOME', None)
 
-
 groups = [
     Group('Terminal', spawn='alacritty -t Terminal -e tmux-session qtile'),
     Group('Web', spawn='google-chrome'),
@@ -60,35 +53,18 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-widgets = SimpleNamespace(
-    group_box=widget.GroupBox(),
-    prompt=widget.Prompt(),
-    task_list=widget.TaskList(),
-    spacer=widget.Spacer(),
-    systray=widget.Systray(),
-    clock=widget.Clock(format='%H:%M'),
-    power=Power(line_weight=0.1, rotate=0.0),
-)
+# Add widget keys to global keys
+keys = list(chain(*(
+    w.keys() for w in widgets.__dict__.values() if isinstance(w, KeyMixin)
+)))
 
 screens = [
     Screen(
-        top=Bar(
-            [
-                widgets.group_box,
-                widgets.prompt,
-                widgets.task_list,
-                widgets.spacer,
-                widgets.systray,
-                widgets.clock,
-                widgets.power,
-            ],
-            64,
-        ),
+        top=widgets.bar,
         wallpaper='/usr/share/sddm/themes/sugar-candy/Backgrounds/Space.jpg',
         wallpaper_mode='fill',
     ),
 ]
-
 
 dgroups_key_binder = None
 dgroups_app_rules = []
@@ -103,7 +79,7 @@ wmname = 'LG3D'
 
 @hook.subscribe.startup_once
 @await_sync
-async def _autostart():
+async def autostart():
     await asyncio.create_subprocess_exec(
         'compton',
         '--config',
