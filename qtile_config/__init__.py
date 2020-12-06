@@ -4,7 +4,7 @@ import libqtile
 
 from . import widgets
 from . import util
-from .theme import theme
+from . import theme
 from .mouse import mouse
 from .group import groups
 from .layout import (
@@ -35,7 +35,9 @@ __all__ = [
 
 DISPLAY = os.getenv('DISPLAY', None)
 HOME = os.getenv('HOME', None)
+THEME = os.getenv('THEME', None)
 
+theme.set_theme(THEME)
 widget_defaults = theme.widget_defaults
 extension_defaults = theme.extension_defaults
 
@@ -55,13 +57,13 @@ wmname = 'LG3D'
 
 
 @libqtile.hook.subscribe.screen_change
-def restart_on_randr(ev):
+def screen_change(ev):
     libqtile.qtile.cmd_restart()
 
 
 @libqtile.hook.subscribe.startup_once
 @util.sync.await_sync
-async def autostart():
+async def startup_once():
     await asyncio.create_subprocess_exec(
         'compton',
         '--config',

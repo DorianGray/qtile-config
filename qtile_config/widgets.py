@@ -3,7 +3,7 @@ from .widget import (
     Bar,
     QTile,
 )
-from .theme import theme
+from . import theme
 from libqtile import widget
 
 

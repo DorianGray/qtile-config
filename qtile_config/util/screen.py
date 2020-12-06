@@ -1,5 +1,5 @@
 from libqtile.config import Screen
-from ..theme import theme
+from .. import theme
 
 
 __all__ = [
