@@ -1,10 +1,10 @@
-from ...util import color
-from ..mixin import KeyMixin
 import math
 import cairocffi
 
 from libqtile import bar
 from libqtile.widget import base
+
+from ... import util
 
 
 __all__ = [
@@ -12,11 +12,12 @@ __all__ = [
 ]
 
 
-class Power(base._Widget, base.MarginMixin, KeyMixin):
+class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
     orientations = base.ORIENTATION_BOTH
     defaults = [
         ('rotate', 135.0, 'rotate the image in degrees counter-clockwise'),
-        ('weight', 0.125, 'how thick the lines should be, by percentage'),
+        ('line_weight', 0.125, 'how thick the lines should be, by percentage'),
+        ('line_color', '#DDDDFF', 'line color'),
     ]
 
     def __init__(self, length=bar.CALCULATED, **config):
@@ -52,7 +53,7 @@ class Power(base._Widget, base.MarginMixin, KeyMixin):
 
         ctx.translate(self.margin_x, self.margin_y)
         ctx.set_fill_rule(cairocffi.FILL_RULE_EVEN_ODD)
-        ctx.set_source_rgb(*color.hex2rgb('#FFFFDD'))
+        ctx.set_source_rgb(*util.color.hex2rgb(self.line_color))
         centerx, centery = width / 2, height / 2
         radius = (width / 2) * 0.6
         ctx.set_line_width(min(height, width) * self.line_weight)

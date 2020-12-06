@@ -1,11 +1,11 @@
 from libqtile.lazy import lazy
 from libqtile.config import Key
-from .mixin import KeyMixin
 from ..util.key import (
     MOD,
     CONTROL,
     ALT,
     SHIFT,
+    KeyMixin,
 )
 
 

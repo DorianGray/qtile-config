@@ -1,4 +1,5 @@
 gobject
 PyGObject
+python-box
 -r ../../qtile/requirements.txt
 -e ../qtile

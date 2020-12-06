@@ -3,6 +3,7 @@ from .widget import (
     Bar,
     QTile,
 )
+from .theme import theme
 from libqtile import widget
 
 
@@ -25,8 +26,8 @@ prompt = widget.Prompt()
 task_list = widget.TaskList()
 spacer = widget.Spacer()
 systray = widget.Systray()
-clock = widget.Clock(format='%H:%M')
-power = Power(line_weight=0.1, rotate=0.0)
+clock = widget.Clock(**theme.clock)
+power = Power(**theme.power)
 bar = Bar(
     [
         group_box,
