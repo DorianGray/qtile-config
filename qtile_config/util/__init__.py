@@ -2,6 +2,7 @@ from . import screen
 from . import key
 from . import color
 from . import sync
+from . import cairo
 
 
 __all__ = [
@@ -9,4 +10,5 @@ __all__ = [
     'key',
     'color',
     'sync',
+    'cairo',
 ]
