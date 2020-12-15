@@ -27,7 +27,14 @@ def test(session):
 def lint(session):
     setup(session)
     session.install('-r', 'pip/requirements-lint.txt')
-    session.run('flake8', 'qtile_config', 'noxfile.py', 'conf', 'test')
+    session.run(
+        'flake8',
+        'qtile_config',
+        'noxfile.py',
+        'conf',
+        'test',
+        'setup.py',
+    )
 
 
 @nox.session()

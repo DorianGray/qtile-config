@@ -3,7 +3,7 @@ import cairocffi
 
 from libqtile import bar
 from libqtile.widget import base
-
+from libqtile.config import Key
 from ... import util
 
 
@@ -17,23 +17,24 @@ class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
     defaults = [
         ('rotate', 135.0, 'rotate the image in degrees counter-clockwise'),
         ('line_weight', 0.125, 'how thick the lines should be, by percentage'),
-        ('line_color', '#DDDDFF', 'line color'),
+        ('line_color', 'DDDDFF', 'line color'),
     ]
 
-    def __init__(self, length=bar.CALCULATED, **config):
-        base._Widget.__init__(self, length, **config)
+    def __init__(self, *args, length=bar.CALCULATED, **kwargs):
+        base._Widget.__init__(self, length, *args, **kwargs)
         self.add_defaults(self.__class__.defaults)
         self.add_defaults(base.MarginMixin.defaults)
         self._variable_defaults['margin'] = 0
         self._pressed = False
 
-    def _configure(self, qtile, pbar):
-        base._Widget._configure(self, qtile, pbar)
-        self.length = self.calculate_length()
-
     def keys(self):
         return [
-
+            Key(
+                [],
+                'XF86PowerOff',
+                lambda: None,
+                desc='Power button',
+            ),
         ]
 
     def draw(self):
@@ -99,8 +100,9 @@ class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
             )
 
     def button_press(self, x, y, button):
-        self._pressed = True
-        self.draw()
+        if button == 1:
+            self._pressed = True
+            self.draw()
         return super().button_press(x, y, button)
 
     def button_release(self, x, y, button):

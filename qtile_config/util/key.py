@@ -23,5 +23,6 @@ class KeyMixin:
 
 def generate(widgets):
     return list(chain(*(
-        w.keys() for w in widgets.__dict__.values() if isinstance(w, KeyMixin)
+        w.keys() for w in widgets.__dict__.values()
+        if isinstance(w, KeyMixin)
     )))

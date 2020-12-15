@@ -1,6 +1,7 @@
 import libqtile
 from .widget import (
     Power,
+    Clock,
     Bar,
     QTile,
     TaskList,
@@ -22,12 +23,12 @@ __all__ = [
 
 
 qtile = QTile()
-group_box = libqtile.widget.GroupBox()
+group_box = libqtile.widget.GroupBox(**theme.group)
 prompt = libqtile.widget.Prompt()
-task_list = TaskList(borderwidth=0)
+task_list = TaskList(**theme.tasklist)
 spacer = libqtile.widget.Spacer()
-systray = libqtile.widget.Systray()
-clock = libqtile.widget.Clock(**theme.clock)
+systray = libqtile.widget.Systray(**theme.systray)
+clock = Clock(**theme.clock)
 power = Power(**theme.power)
 bar = Bar(
     [

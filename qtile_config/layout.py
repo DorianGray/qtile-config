@@ -31,4 +31,5 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='ssh-askpass'),  # ssh-askpass
     Match(wm_class='Steam'),  # Steam
     Match(title='Steam'),
+    Match(wm_class='qgui'),  # qgui
 ])

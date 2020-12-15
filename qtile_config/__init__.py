@@ -2,9 +2,9 @@ import os
 import asyncio
 import libqtile
 
-from . import widgets
 from . import util
 from . import theme
+from . import widgets
 from .mouse import mouse
 from .group import groups
 from .layout import (
@@ -41,7 +41,6 @@ theme.set_theme(THEME)
 widget_defaults = theme.widget_defaults
 extension_defaults = theme.extension_defaults
 
-# Add widget keys to global keys
 keys = util.key.generate(widgets)
 screens = util.screen.generate(widgets)
 
