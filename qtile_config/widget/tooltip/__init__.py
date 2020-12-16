@@ -7,10 +7,11 @@ class Tooltip(Popup):
         super().__init__(qtile, *args, **kwargs)
 
     def show(self, x, y, text=None):
-        if text is not None:
-            self.text = text
         self.x = x
         self.y = y
+        if text is not None:
+            self.text = text
+
         width, height = self.layout.layout.get_pixel_size()
         height += self.vertical_padding * 2
         width += self.horizontal_padding * 2

@@ -4,7 +4,11 @@ from enum import (
 )
 import cairocffi
 from libqtile.widget import tasklist
-from ...util import cairo
+from ... import (
+    util,
+    theme,
+)
+from ..tooltip import Tooltip
 
 
 __all__ = [
@@ -45,7 +49,7 @@ class TaskList(tasklist.TaskList):
 
     @classmethod
     def _icon_surface(cls, icon):
-        return cairo.duplicate_surface(
+        return util.cairo.duplicate_surface(
             cairocffi.ImageSurface.create_for_data(
                 icon[1],
                 cairocffi.FORMAT_ARGB32,
@@ -62,12 +66,16 @@ class TaskList(tasklist.TaskList):
         surface = cls._icon_surface(icon)
 
         if WindowState.UNFOCUSED in state:
-            cairo.darken(surface, 0.5)
+            util.cairo.darken(surface, 0.5)
 
         if WindowState.MINIMIZED in state:
-            cairo.grayscale(surface)
+            util.cairo.grayscale(surface)
 
         return surface
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._tooltip = Tooltip(**theme.tooltip)
 
     def get_window_icon(self, window):
         if not window.icons:
@@ -87,7 +95,7 @@ class TaskList(tasklist.TaskList):
             cache[wid] = {}
 
         surface = self._icon_render(window, self.icon_size, state=state)
-        width, height = cairo.get_surface_size(surface)
+        width, height = util.cairo.get_surface_size(surface)
         pattern = cairocffi.SurfacePattern(surface)
 
         size = max(width, height)
@@ -99,6 +107,23 @@ class TaskList(tasklist.TaskList):
 
         cache[wid][state] = pattern
         return pattern
+
+    def mouse_enter(self, x, y):
+        super().mouse_enter(x, y)
+        win = self.get_clicked(x, y)
+        if win is not None:
+            self._tooltip.text = win.name
+
+            x = min(
+                self.bar.width - self._tooltip.width,
+                self.offset,
+            ) + x
+            y = self.bar.height
+            self._tooltip.show(x, y)
+
+    def mouse_leave(self, x, y):
+        super().mouse_enter(self.margin_x + x, y)
+        self._tooltip.hide()
 
     def get_taskname(self, window):
         return ''
