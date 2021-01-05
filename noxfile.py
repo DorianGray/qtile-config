@@ -4,8 +4,8 @@ import nox
 
 nox.options.sessions = ['lint']
 nox.options.stop_on_first_error = True
-nox.options.reuse_existing_virtualenvs = True
-nox.options.pythons = ['python3.7m']
+nox.options.reuse_existing_virtualenvs = False
+nox.options.pythons = ['pypy3', 'python3.7m']
 
 skw = dict(
     python=nox.options.pythons,
@@ -16,7 +16,7 @@ CWD = os.getcwd()
 
 
 def setup(session):
-    session.install('xcffib')  # must be installed before cairocffi
+    session.install('-e', '../xcffib')  # must be installed before cairocffi
 
 
 @nox.session(**skw)

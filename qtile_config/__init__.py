@@ -61,7 +61,6 @@ def screen_change(ev):
 
 
 @libqtile.hook.subscribe.startup_once
-@util.sync.await_sync
 async def startup_once():
     await asyncio.create_subprocess_exec(
         'compton',

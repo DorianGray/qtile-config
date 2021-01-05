@@ -29,7 +29,10 @@ class Clock(Clock):
             self.offset,
         )
         y = self.bar.height
-        self._tooltip.show(x, y, self.tooltip())
+        self._tooltip.x = x
+        self._tooltip.y = y
+        self._tooltip.text = self.tooltip()
+        self._tooltip.show()
 
     def mouse_leave(self, x, y):
         self._tooltip.hide()

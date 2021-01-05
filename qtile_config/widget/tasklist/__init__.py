@@ -108,18 +108,32 @@ class TaskList(tasklist.TaskList):
         cache[wid][state] = pattern
         return pattern
 
+    def show_tooltip(self, x, y):
+        tt = self._tooltip
+        # prevent tooltips from being drawn offscreen
+        tt.x = max(
+            min(self.offset, self.bar.screen.width - self.width) + x,
+            0,
+        )
+        tt.y = max(
+            min(
+                self.height,
+                (
+                    self.bar.screen.height
+                    - self.bar.height
+                    - self._tooltip.height
+                )
+            ),
+            0,
+        )
+        tt.show()
+
     def mouse_enter(self, x, y):
         super().mouse_enter(x, y)
         win = self.get_clicked(x, y)
         if win is not None:
             self._tooltip.text = win.name
-
-            x = min(
-                self.bar.width - self._tooltip.width,
-                self.offset,
-            ) + x
-            y = self.bar.height
-            self._tooltip.show(x, y)
+            self.show_tooltip(x, y)
 
     def mouse_leave(self, x, y):
         super().mouse_enter(self.margin_x + x, y)
