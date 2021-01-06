@@ -38,14 +38,10 @@ class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
         ]
 
     def draw(self):
-        surface = self.drawer
-        ctx = surface.ctx
-
         width, height = self.get_size()
 
-        ctx.move_to(self.offset, height)
-        surface.clear(self.background or self.bar.background)
-        ctx.save()
+        self.drawer.clear(self.background or self.bar.background)
+        ctx = self.drawer.new_ctx()
 
         if self.rotate != 0.0:
             ctx.translate(width/2, height/2)
@@ -77,8 +73,6 @@ class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
         )
         ctx.fill()
 
-        ctx.restore()
-
         if self._pressed:
             offset_x = math.ceil(width * 0.025)
             offset_y = math.ceil(height * 0.025)
@@ -87,13 +81,13 @@ class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
             offset_y = 0
 
         if self.bar.horizontal:
-            surface.draw(
+            self.drawer.draw(
                 offsetx=self.offset + offset_x,
                 width=self.width,
                 offsety=offset_y,
             )
         else:
-            surface.draw(
+            self.drawer.draw(
                 offsety=self.offset + math.floor(self.offset_y),
                 height=self.height,
                 offsetx=offset_x,
