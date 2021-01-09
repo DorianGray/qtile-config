@@ -30,6 +30,7 @@ theme = Box(
         tooltip_format='%Y/%m/%d',
     ),
     group=Box(
+        font='Font Awesome 5 Solid',
         this_current_screen_border=defaults.foreground,
         this_screen_border=defaults.foreground,
     ),

@@ -6,6 +6,6 @@ __all__ = [
 ]
 
 groups = [
-    Group('Terminal', spawn='alacritty -t Terminal -e tmux-session qtile'),
-    Group('Web', spawn='google-chrome'),
+    Group(' ', spawn='alacritty -t Terminal -e tmux-session qtile'),
+    Group('', spawn='google-chrome'),
 ]
