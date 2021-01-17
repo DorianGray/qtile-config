@@ -1,12 +1,12 @@
-from . import screen
-from . import key
-from . import color
 from . import cairo
+from . import context
+from . import key
+from . import screen
 
 
 __all__ = [
-    'screen',
-    'key',
-    'color',
     'cairo',
+    'context',
+    'key',
+    'screen',
 ]

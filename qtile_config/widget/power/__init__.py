@@ -4,6 +4,7 @@ import cairocffi
 from libqtile import bar
 from libqtile.widget import base
 from libqtile.config import Key
+from libqtile.utils import rgb
 from ... import util
 
 
@@ -50,7 +51,7 @@ class Power(base._Widget, base.MarginMixin, util.key.KeyMixin):
 
         ctx.translate(self.margin_x, self.margin_y)
         ctx.set_fill_rule(cairocffi.FILL_RULE_EVEN_ODD)
-        ctx.set_source_rgb(*util.color.hex2rgb(self.line_color))
+        ctx.set_source_rgba(*rgb(self.line_color))
         centerx, centery = width / 2, height / 2
         radius = (width / 2) * 0.6
         ctx.set_line_width(min(height, width) * self.line_weight)

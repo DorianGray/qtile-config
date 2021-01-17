@@ -1,35 +1,34 @@
 import os
 import nox
 
+PYTHONS = [
+    'pypy3',
+    '3.7',
+]
 
-nox.options.sessions = ['lint']
-nox.options.stop_on_first_error = True
-nox.options.reuse_existing_virtualenvs = False
-nox.options.pythons = ['pypy3', 'python3.7m']
-
-skw = dict(
-    python=nox.options.pythons,
-)
+PYTHON = 'pypy3'
 
 HOME = os.getenv('HOME', None)
 CWD = os.getcwd()
+
+nox.options.sessions = ['lint']
 
 
 def setup(session):
     session.install('-e', '../xcffib')  # must be installed before cairocffi
 
 
-@nox.session(**skw)
+@nox.session(python=PYTHONS)
 def test(session):
     setup(session)
-    session.install('-r', 'pip/requirements-test.txt')
+    session.install('-r', 'requirements/test')
     session.run('pytest', 'test/')
 
 
-@nox.session(**skw)
+@nox.session(python=PYTHON)
 def lint(session):
     setup(session)
-    session.install('-r', 'pip/requirements-lint.txt')
+    session.install('-r', 'requirements/lint')
     session.run(
         'flake8',
         'qtile_config',
@@ -40,13 +39,17 @@ def lint(session):
     )
 
 
-@nox.session(**skw)
+@nox.session(python=PYTHONS)
 def qtile(session):
     setup(session)
-    session.install('-r', 'pip/requirements.txt', '-e', '.')
+    session.install(
+        '-r', 'requirements/base',
+        '-r', 'requirements/optional',
+        '-e', '.',
+    )
 
 
-@nox.session(**skw)
+@nox.session(python=False)
 def hooks(session):
     session.run(
         'ln',
@@ -57,9 +60,8 @@ def hooks(session):
     )
 
 
-@nox.session(**skw)
+@nox.session(python=False)
 def install(session):
-    qtile(session)
     session.run(
         'ln',
         '-s',

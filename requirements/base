@@ -1,7 +1,3 @@
-gobject
-PyGObject
 python-box
-setproctitle
 -r ../../qtile/requirements.txt
 -e ../qtile
--e ../tox-gh-actions
